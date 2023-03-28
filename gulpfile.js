@@ -1,14 +1,22 @@
-const {src,dest} = require('gulp');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
+const {watch, series} = require('gulp');
+
+function clean(cb){
+    cb();
+}
+
+function javascript(cb){
+    cb()
+}
+
+function css(cb){
+    cb()
+}
 
 exports.default = function(){
-    return src('src/**/*.js')
-    .pipe(babel())
-    .pipe(src('vendor/*.js'))
-    .pipe(dest('output/'))
-    .pipe(uglify())
-    .pipe(rename({extname:'.min.js'}))
-    .pipe(dest('output/'));
+    watch('src/*.css',css)
+
+    // watch('src/*.js',series(clean,javascript))
+    watch('src/*.js',{events : 'all'},function(cb){
+        cb()
+    })
 }
